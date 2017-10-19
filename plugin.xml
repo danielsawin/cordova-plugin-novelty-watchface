@@ -6,6 +6,8 @@
 	<name>Watchface</name>
 	<keywords>cordova, camera, file, exif, geo, location, geolocation, tag</keywords>
     <description>For me and not yo</description>
+    
+    <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
 
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
