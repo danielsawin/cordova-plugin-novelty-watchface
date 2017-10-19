@@ -16,6 +16,13 @@
 	</js-module>
 
 	<platform name="ios">
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>GDLibraryMode</key>
+                    <string>GDEnterpriseSimulation</string>
+                </dict>
+            </array>
 		<source-file src="src/ios/Watchface.swift"/>
 	</platform>
 
