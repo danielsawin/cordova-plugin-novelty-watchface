@@ -11,11 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/domax/cordova-plugin-photos"
+    "url": "https://github.com/danielsawin/cordova-plugin-novelty-watchface"
   },
   "keywords": [
     "ecosystem:cordova",
-    "cordova-android",
     "cordova-ios",
     "exif",
     "photo-library",
@@ -24,7 +23,7 @@
     "photo-asset",
     "thumbnail"
   ],
-  "autor": "Maksym Dominichenko <max@dominichenko.com>",
+  "autor": "Daniel Sawin",
   "license": "MIT",
   "engines": [
     {
@@ -33,7 +32,7 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/domax/cordova-plugin-photos/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/domax/cordova-plugin-photos#README"
+  "homepage": "https://github.com/danielsawin/cordova-plugin-novelty-watchface#README"
 }
