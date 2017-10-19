@@ -6,18 +6,16 @@
 	<name>Watchface</name>
 	<keywords>cordova, camera, file, exif, geo, location, geolocation, tag</keywords>
 
-	<dependency id="cordova-plugin-compat" version="^1.0.0" />
-
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
 	</engines>
 
 	<js-module src="www/Watchface.js" name="Watchface">
-		<clobbers target="watchface"/>
+		<clobbers target="Watchface"/>
 	</js-module>
 
 	<platform name="ios">
-		<config-file target="config.xml" parent="/*">
+		<config-file target="config.xml">
 			<feature name="Watchface">
 				<param name="ios-package" value="Watchface"/>
 			</feature>
