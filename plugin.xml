@@ -5,6 +5,7 @@
 
 	<name>Watchface</name>
 	<keywords>cordova, camera, file, exif, geo, location, geolocation, tag</keywords>
+    <description>For me and not yo</description>
 
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
