@@ -9,11 +9,6 @@
     
     <dependency id="cordova-plugin-compat" version="^1.0.0" />
     <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
-
-	<engines>
-		<engine name="cordova" version=">=3.4.0"/>
-	</engines>
-
 	<js-module src="www/Watchface.js" name="Watchface">
 		<clobbers target="Watchface"/>
 	</js-module>
