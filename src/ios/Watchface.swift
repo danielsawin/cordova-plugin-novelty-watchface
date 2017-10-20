@@ -89,7 +89,6 @@ class CustomPhotoAlbum {
 }
 
 @objc(Watchface) class Watchface : CDVPlugin {
-    
     func update(command: CDVInvokedUrlCommand) {
         //Fetch and Create Albums
         let mainAlbum = CustomPhotoAlbum()
@@ -99,7 +98,7 @@ class CustomPhotoAlbum {
         oldAlbum.albumName = "oneWatch Archive"
         oldAlbum.load()
         
-        let pluginResult = CDVPluginResult(
+        var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
         
@@ -123,6 +122,13 @@ class CustomPhotoAlbum {
         }else{
             mainAlbum.save(image: newFace!)
         }
+        
+        
+        //Get Plugin Result
+        pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: msg
+        )
         
         //Send pluginResult
         self.commandDelegate!.send(

@@ -6,6 +6,9 @@
 	<name>Watchface</name>
 	<keywords>cordova, camera, file, exif, geo, location, geolocation, tag</keywords>
     <description>For me and not yo</description>
+    
+    <dependency id="cordova-plugin-compat" version="^1.0.0" />
+    <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
 
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
@@ -16,14 +19,14 @@
 	</js-module>
 
 	<platform name="ios">
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-            <array>
-                <dict>
-                    <key>GDLibraryMode</key>
-                    <string>GDEnterpriseSimulation</string>
-                </dict>
-            </array>
+        <config-file target="config.xml" parent="*">
+            <feature name="Watchface">
+                <param name="ios-package" value="Watchface" />
+            </feature>
+        </config-file>
 		<source-file src="src/ios/Watchface.swift"/>
+        <!--<header-file src="src/ios/Watchface.h"/>
+        <source-file src="src/ios/Watchface.m"/>-->
 	</platform>
 
 </plugin>
