@@ -4,7 +4,6 @@
 //
 //  Created by Daniel Sawin on 10/19/17.
 //
-
 import Photos
 
 @objc(Watchface) class Watchface : CDVPlugin {
@@ -66,7 +65,8 @@ import Photos
         }
         
         func save(image: UIImage) {
-            if assetCollection == nil {
+            if self.assetCollection == nil {
+                print("error")
                 return                          // if there was an error upstream, skip the save
             }
             
@@ -80,13 +80,36 @@ import Photos
             }, completionHandler: nil)
         }
         
-        func removeImages() {
-            let oldFace = PHAsset.fetchKeyAssets(in: self.assetCollection, options: nil)
-            let request = PHAssetCollectionChangeRequest(for: self.assetCollection)
-            request!.removeAssets(oldFace!)
+        func reMoveImages(oldAlbum:PHAssetCollection) {
+            let oldFace = PHAsset.fetchKeyAssets(in: self.assetCollection, options: nil)!
+            if(oldFace.firstObject != nil){
+                PHPhotoLibrary.shared().performChanges({
+                    let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
+                    albumChangeRequest!.removeAssets(oldFace)
+                }, completionHandler: nil)
+                
+                PHPhotoLibrary.shared().performChanges({
+                    let albumChangeRequest = PHAssetCollectionChangeRequest(for: oldAlbum)
+                    albumChangeRequest!.addAssets(oldFace)
+                }, completionHandler: nil)
+                
+                
+            }else{
+                NSLog("no images to remove...")
+            }
         }
     }
-    
+    func getAssetThumbnail(asset: PHAsset) -> UIImage {
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        var thumbnail = UIImage()
+        option.isSynchronous = true
+        manager.requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+            thumbnail = result!
+        })
+        return thumbnail
+    }
+    @objc(update:)
     func update(command: CDVInvokedUrlCommand) {
         //Fetch and Create Albums
         let mainAlbum = CustomPhotoAlbum()
@@ -99,35 +122,32 @@ import Photos
         let pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
-        
-        let dataURL = command.arguments[0]
+        var dataURL: String
+        dataURL = command.arguments[0] as! String
         //Create image with DataURL
-        let imageData = NSData(base64Encoded: dataURL as! String, options: [])
+        var newFace: UIImage
         
-        let newFace = UIImage(data: imageData! as Data)
-        
-        
-        //Check if folders exist
-        if(mainAlbum.fetchAssetCollectionForAlbum() == nil){
-            mainAlbum.createAlbum()
-            oldAlbum.createAlbum()
-        }else{
-            oldAlbum.removeImages()
+        if let decodedData = Data(base64Encoded: dataURL, options: .ignoreUnknownCharacters) {
+            let image = UIImage(data: decodedData)
+            newFace = image!
+            //Check if folders exist
+            if(mainAlbum.fetchAssetCollectionForAlbum() == nil){
+                NSLog("creating albums...")
+                mainAlbum.createAlbum()
+                oldAlbum.createAlbum()
+                mainAlbum.save(image: newFace)
+            }else{
+                NSLog("removing images...")
+                mainAlbum.reMoveImages(oldAlbum: oldAlbum.assetCollection)
+            }
+            
+            if(oldAlbum.fetchAssetCollectionForAlbum() == nil){
+                oldAlbum.createAlbum()
+            }else{
+                NSLog("saving new face...")
+                mainAlbum.save(image: newFace)
+            }
         }
-        
-        if(oldAlbum.fetchAssetCollectionForAlbum() == nil){
-            oldAlbum.createAlbum()
-        }else{
-            mainAlbum.save(image: newFace!)
-        }
-        
-        
-        //Get Plugin Result
-        pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: msg
-        )
-        
         //Send pluginResult
         self.commandDelegate!.send(
             pluginResult,
@@ -135,5 +155,31 @@ import Photos
         )
         
     }
+    /*@objc(getCurrentFace:)
+     func getCurrentFace(command: CDVInvokedUrlCommand) {
+     let mainAlbum = CustomPhotoAlbum()
+     mainAlbum.albumName = "oneWatch"
+     mainAlbum.load()
+     
+     let currentFace = PHAsset.fetchKeyAssets(in: mainAlbum.assetCollection, options: nil)!
+     
+     let img = getAssetThumbnail(asset: currentFace.firstObject!)
+     
+     let imageData = UIImageJPEGRepresentation(img, 0.5)
+     
+     let strBase64 = imageData?.base64EncodedString(options: .lineLength64Characters)
+     print(strBase64 ?? "encoding failed...")
+     
+     let pluginResult = CDVPluginResult(
+     status: CDVCommandStatus_ERROR,
+     messageAs: strBase64
+     )
+     
+     self.commandDelegate!.send(
+     pluginResult,
+     callbackId: command.callbackId
+     )
+     }*/
+    
 }
 
