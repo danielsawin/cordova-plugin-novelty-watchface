@@ -13,9 +13,10 @@
     <js-module name="Watchface" src="www/Watchface.js">
         <clobbers target="Watchface" />
     </js-module>
+    
 
 	<platform name="ios">
-        <config-file target="config.xml" parent="*">
+        <config-file target="config.xml" parent="/*">
             <feature name="Watchface">
                 <param name="ios-package" value="Watchface" />
             </feature>

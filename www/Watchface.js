@@ -1,4 +1,3 @@
-cordova.define("cordova-plugin-novelty-watchface.Watchface", function(require, exports, module) {
 /*
  * The MIT License (MIT)
  *
@@ -22,18 +21,18 @@ cordova.define("cordova-plugin-novelty-watchface.Watchface", function(require, e
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-               var exec = require('cordova/exec');
-               
-               var Watchface = {
-               
-               update: function(dataURL, successCallback, errorCallback){
-               exec(successCallback, errorCallback, "Watchface", "update", [dataURL]);
-               }
-               
+var exec = require('cordova/exec');
+
+var Watchface = {
+
+update: function(dataURL, successCallback, errorCallback){
+exec(successCallback, errorCallback, "Watchface", "update", [dataURL]);
+}
+
 /*getCurrentFace: function (successCallback, errorCallback){
  exec(successCallback, errorCallback, "Watchface", "getCurrentFace");
  }*/
-               
+
                /*collections: function (options, successCallback, errorCallback) {
                 if (typeof options === "function") {
                 errorCallback = successCallback;
@@ -42,7 +41,7 @@ cordova.define("cordova-plugin-novelty-watchface.Watchface", function(require, e
                 }
                 exec(successCallback, errorCallback, "Photos", "collections", [options]);
                 },
-                
+
                 photos: function (collectionIds, options, successCallback, errorCallback) {
                 switch (typeof collectionIds) {
                 case "function":
@@ -70,7 +69,7 @@ cordova.define("cordova-plugin-novelty-watchface.Watchface", function(require, e
                 }
                 exec(successCallback, errorCallback, "Photos", "photos", [collectionIds, options]);
                 },
-                
+
                 thumbnail: function (photoId, options, successCallback, errorCallback) {
                 if (typeof options === "function") {
                 errorCallback = successCallback;
@@ -79,16 +78,13 @@ cordova.define("cordova-plugin-novelty-watchface.Watchface", function(require, e
                 }
                 exec(successCallback, errorCallback, "Photos", "thumbnail", [photoId, options]);
                 },
-                
+
                 image: function (photoId, successCallback, errorCallback) {
                 exec(successCallback, errorCallback, "Photos", "image", [photoId]);
                 },
-                
+
                 cancel: function () {
                 exec(null, null, "Photos", "cancel", []);
                 }*/
                };
-               module.exports = Watchface;
-               
-               });
-
+module.exports = Watchface;
