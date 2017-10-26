@@ -118,10 +118,10 @@ import Photos
         let oldAlbum = CustomPhotoAlbum()
         oldAlbum.albumName = "oneWatch Archive"
         oldAlbum.load()
-        
-        let pluginResult = CDVPluginResult(
+        var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
+        
         var dataURL: String
         dataURL = command.arguments[0] as! String
         //Create image with DataURL
@@ -136,6 +136,9 @@ import Photos
                 mainAlbum.createAlbum()
                 oldAlbum.createAlbum()
                 mainAlbum.save(image: newFace)
+                pluginResult = CDVPluginResult(
+                    status: CDVCommandStatus_OK
+                )
             }else{
                 NSLog("removing images...")
                 mainAlbum.reMoveImages(oldAlbum: oldAlbum.assetCollection)
@@ -146,6 +149,9 @@ import Photos
             }else{
                 NSLog("saving new face...")
                 mainAlbum.save(image: newFace)
+                pluginResult = CDVPluginResult(
+                    status: CDVCommandStatus_OK
+                )
             }
         }
         //Send pluginResult
